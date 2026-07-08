@@ -13,7 +13,7 @@
     --line:#1C2432; --line-soft:#161D29;
     --fg:#EAEFF6; --muted:#66728A; --muted-2:#48546A;
     --accent:#F5B841; --accent-rgb:245,184,65; --accent-lite:#FFD37A;
-    --teal:#35D0BE; --rose:#FF6B6B; --shipped:#3B4658;
+    --teal:#35D0BE; --ok:#40D584; --rose:#FF6B6B; --shipped:#3B4658;
     --display:'Space Grotesk', system-ui, sans-serif;
     --mono:'JetBrains Mono', ui-monospace, monospace;
     --dwell:9s;
@@ -100,7 +100,7 @@
   .dot{width:clamp(7px,.55vw,10px);height:clamp(7px,.55vw,10px);border-radius:50%;flex:none}
   .s-final{color:var(--rose)} .s-final .dot{background:var(--rose);box-shadow:0 0 10px var(--rose)}
   .s-soon{color:var(--accent)} .s-soon .dot{background:var(--accent);box-shadow:0 0 10px var(--accent)}
-  .s-track{color:var(--teal)} .s-track .dot{background:var(--teal);box-shadow:0 0 9px var(--teal)}
+  .s-track{color:var(--ok)} .s-track .dot{background:var(--ok);box-shadow:0 0 9px var(--ok)}
   .s-plan{color:var(--muted)} .s-plan .dot{background:var(--muted)}
   .s-shipped{color:var(--shipped)} .s-shipped .dot{background:var(--shipped)}
   .s-tbd{color:var(--muted-2)} .s-tbd .dot{background:var(--muted-2)}
@@ -135,7 +135,7 @@
     </div>
   </header>
   <main>
-    <section class="hero">
+    <section class="hero" id="hero-section">
       <div class="rot-bar"><div class="rot-fill" id="rot-fill"></div></div>
       <div class="hero-content" id="hero-content">
         <div class="eyebrow"><span>◈</span> <span id="hero-eyebrow">Next Launch</span> <span class="code" id="hero-code">—</span></div>
@@ -247,6 +247,20 @@ function classify(days,shipped){
   return {cls:'s-plan',label:'Planned'};
 }
 
+/* status → hero/highlight accent colour (Imminent uses the brand accent) */
+function statusColor(cls){
+  switch(cls){
+    case 's-final':   return '#FF6B6B';
+    case 's-soon':    return CFG.accent || '#F5B841';
+    case 's-track':   return '#40D584';
+    case 's-plan':    return '#66728A';
+    case 's-shipped': return '#3B4658';
+    default:          return CFG.accent || '#F5B841';
+  }
+}
+function statusClassOf(it){ if(!it.valid) return 's-plan'; return it.shipped ? 's-shipped' : classify(it.days,false).cls; }
+function applyAccentTo(el,hex){ const rgb=hexToRgb(hex); el.style.setProperty('--accent',hex); el.style.setProperty('--accent-rgb',rgb.join(', ')); el.style.setProperty('--accent-lite',lighten(rgb,0.28)); }
+
 function enrich(now){
   return DATA.map(p=>{
     if(!p.valid) return {...p, days:null, shipped:false};
@@ -273,6 +287,7 @@ function renderDots(rotation){
 }
 
 function renderHero(hero,isNext,now){
+  applyAccentTo(document.getElementById('hero-section'), statusColor(statusClassOf(hero)));
   document.getElementById('hero-eyebrow').textContent = hero.shipped ? 'Now Live' : (isNext ? 'Next Launch' : 'Upcoming');
   document.getElementById('hero-code').textContent = hero.code;
   document.getElementById('hero-name').textContent = hero.name;
@@ -306,7 +321,9 @@ function renderManifest(items){
     const ownerCell = it.owner
       ? `<div class="mowner"><span class="obadge">${initials(it.owner)}</span><span class="oname">${esc(it.owner)}</span></div>`
       : `<div class="mowner empty">—</div>`;
-    return `<div class="${cls}">
+    let featStyle='';
+    if(it.code===featuredCode){ const c=statusColor(st.cls==='s-tbd'?'s-plan':st.cls); featStyle=` style="--accent:${c};--accent-rgb:${hexToRgb(c).join(', ')}"`; }
+    return `<div class="${cls}"${featStyle}>
       <div class="prod"><span class="pcode">${esc(it.code)}</span><span class="pname">${esc(it.name)}</span></div>
       ${ownerCell}
       <div class="mdate">${dateCell}</div>
