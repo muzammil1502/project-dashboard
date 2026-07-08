@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0E14; --panel:#10151E; --panel-2:#0D121A;
+    --line:#1C2432; --line-soft:#161D29;
+    --fg:#EAEFF6; --muted:#66728A; --muted-2:#48546A;
+    --accent:#F5B841; --accent-rgb:245,184,65; --accent-lite:#FFD37A;
+    --teal:#35D0BE; --rose:#FF6B6B; --shipped:#3B4658;
+    --display:'Space Grotesk', system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --dwell:9s;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--ink);color:var(--fg);font-family:var(--display);
+    overflow:hidden;height:100vh;
+    background-image:
+      radial-gradient(120% 90% at 22% 30%, rgba(var(--accent-rgb),0.05), transparent 55%),
+      radial-gradient(120% 120% at 100% 100%, rgba(53,208,190,0.045), transparent 50%);
+  }
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px);mix-blend-mode:overlay;opacity:.5}
+
+  .board{height:100vh;display:grid;grid-template-rows:auto 1fr;padding:clamp(18px,2.2vw,40px);gap:clamp(14px,1.6vw,28px)}
+
+  header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:clamp(12px,1.2vw,22px)}
+  .wordmark{display:flex;align-items:center;gap:clamp(10px,1vw,18px)}
+  .beacon-dot{width:clamp(9px,.7vw,13px);height:clamp(9px,.7vw,13px);border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent);animation:pulse 2s ease-in-out infinite}
+  .wordmark .brand{font-weight:700;letter-spacing:.02em;font-size:clamp(16px,1.5vw,26px)}
+  .wordmark .brand span{color:var(--muted);font-weight:500}
+  .wordmark .tag{font-family:var(--mono);font-size:clamp(9px,.72vw,12px);letter-spacing:.34em;color:var(--accent);text-transform:uppercase;padding-left:clamp(10px,1vw,18px);border-left:1px solid var(--line);margin-left:clamp(4px,.5vw,10px);align-self:center}
+  .clock{display:flex;align-items:baseline;gap:clamp(14px,1.4vw,26px);font-family:var(--mono)}
+  .clock .date{font-size:clamp(13px,1.05vw,19px);color:var(--fg);letter-spacing:.06em}
+  .clock .time{font-size:clamp(13px,1.05vw,19px);color:var(--muted);font-variant-numeric:tabular-nums}
+  .clock .qtr{font-size:clamp(10px,.78vw,13px);letter-spacing:.28em;color:var(--teal);border:1px solid rgba(53,208,190,.3);border-radius:2px;padding:.35em .7em;text-transform:uppercase}
+
+  main{display:grid;grid-template-columns:42% 1fr;gap:clamp(16px,1.8vw,34px);min-height:0}
+
+  .hero{position:relative;border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,var(--panel),var(--panel-2));padding:clamp(22px,2.4vw,46px);display:flex;flex-direction:column;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 0%, rgba(var(--accent-rgb),.08), transparent 60%);pointer-events:none}
+  .rot-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--line-soft)}
+  .rot-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-lite));box-shadow:0 0 10px rgba(var(--accent-rgb),.5)}
+  .rot-fill.run{width:100%;transition:width var(--dwell) linear}
+
+  .hero-content{display:flex;flex-direction:column;flex:1;min-height:0;transition:opacity .4s ease, transform .4s ease}
+  .hero-content.swapping{opacity:0;transform:translateY(14px)}
+  .hero .eyebrow{font-family:var(--mono);font-size:clamp(10px,.82vw,14px);letter-spacing:.36em;color:var(--accent);text-transform:uppercase;display:flex;align-items:center;gap:.7em}
+  .hero .code{font-family:var(--mono);font-size:clamp(11px,.82vw,14px);color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:.2em .6em;letter-spacing:.1em}
+  .hero .name{font-size:clamp(30px,3.6vw,62px);font-weight:700;line-height:1.02;margin-top:clamp(10px,1vw,18px);letter-spacing:-.01em}
+  .hero .desc{color:var(--muted);font-size:clamp(13px,1vw,18px);margin-top:.5em;letter-spacing:.02em;min-height:1.2em}
+  .hero .owner{display:flex;align-items:center;gap:clamp(9px,.8vw,14px);margin-top:clamp(12px,1.2vw,20px)}
+  .ava{width:clamp(30px,2.6vw,46px);height:clamp(30px,2.6vw,46px);border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:clamp(11px,.95vw,17px);color:var(--accent);background:rgba(var(--accent-rgb),.12);border:1px solid rgba(var(--accent-rgb),.4)}
+  .owner-meta{display:flex;flex-direction:column;line-height:1.25}
+  .owner-label{font-family:var(--mono);font-size:clamp(8px,.66vw,11px);letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .owner-name{font-size:clamp(14px,1.15vw,21px);font-weight:600;color:var(--fg);letter-spacing:.01em}
+
+  .countdown{margin-top:auto;display:flex;flex-direction:column;gap:clamp(4px,.5vw,10px)}
+  .days-wrap{display:flex;align-items:baseline;gap:clamp(10px,1vw,20px)}
+  .days{font-family:var(--mono);font-weight:800;color:var(--accent);font-size:clamp(90px,12vw,220px);line-height:.82;letter-spacing:-.03em;font-variant-numeric:tabular-nums;text-shadow:0 0 40px rgba(var(--accent-rgb),.25)}
+  .days-label{font-family:var(--mono);font-size:clamp(16px,1.8vw,34px);letter-spacing:.5em;color:var(--fg);text-transform:uppercase;padding-bottom:clamp(8px,1vw,20px)}
+  .hms{font-family:var(--mono);font-size:clamp(18px,2vw,40px);color:var(--fg);letter-spacing:.14em;font-variant-numeric:tabular-nums;min-height:1em}
+  .hms .u{color:var(--muted-2);font-size:.5em;letter-spacing:.2em}
+  .launch-date{font-family:var(--mono);font-size:clamp(12px,1vw,18px);color:var(--muted);letter-spacing:.12em;margin-top:.4em;display:flex;align-items:center;gap:.6em}
+  .launch-date .arrow{color:var(--accent)}
+  .readiness{margin-top:clamp(14px,1.4vw,26px)}
+  .readiness .rlabel{font-family:var(--mono);font-size:clamp(9px,.72vw,12px);letter-spacing:.3em;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between;margin-bottom:.6em}
+  .track{height:clamp(5px,.5vw,9px);background:var(--line-soft);border-radius:99px;overflow:hidden}
+  .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-lite));border-radius:99px;box-shadow:0 0 12px rgba(var(--accent-rgb),.4);transition:width .5s ease}
+
+  .rdots{display:flex;gap:clamp(7px,.7vw,12px);justify-content:center;margin-top:clamp(16px,1.6vw,28px)}
+  .rdot{width:clamp(7px,.6vw,10px);height:clamp(7px,.6vw,10px);border-radius:99px;background:var(--line);transition:all .4s ease}
+  .rdot.active{width:clamp(24px,2.4vw,42px);background:var(--accent);box-shadow:0 0 10px rgba(var(--accent-rgb),.5)}
+
+  .manifest{border:1px solid var(--line);border-radius:6px;background:var(--panel);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .manifest .mhead{display:grid;grid-template-columns:1.5fr 1.15fr .95fr .7fr .85fr;align-items:center;padding:clamp(13px,1.3vw,22px) clamp(18px,1.6vw,30px);font-family:var(--mono);font-size:clamp(9px,.74vw,12px);letter-spacing:.28em;color:var(--muted-2);text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .mhead .r{text-align:right}
+  .rows{flex:1;display:flex;flex-direction:column;min-height:0}
+  .row{display:grid;grid-template-columns:1.5fr 1.15fr .95fr .7fr .85fr;align-items:center;padding:0 clamp(18px,1.6vw,30px);flex:1;border-bottom:1px solid var(--line-soft);position:relative;transition:background .4s ease}
+  .row:last-child{border-bottom:none}
+  .row .prod{display:flex;align-items:center;gap:clamp(10px,1vw,18px)}
+  .row .pcode{font-family:var(--mono);font-weight:700;font-size:clamp(13px,1.15vw,21px);color:var(--fg);min-width:clamp(48px,4vw,74px);letter-spacing:.02em}
+  .row .pname{color:var(--muted);font-size:clamp(12px,.95vw,17px);letter-spacing:.01em}
+  .row .mowner{display:flex;align-items:center;gap:clamp(7px,.6vw,11px);min-width:0}
+  .row .mowner.empty{color:var(--muted-2);font-family:var(--mono)}
+  .obadge{width:clamp(22px,1.8vw,32px);height:clamp(22px,1.8vw,32px);border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:clamp(9px,.72vw,12px);color:var(--accent);background:rgba(var(--accent-rgb),.1);border:1px solid rgba(var(--accent-rgb),.32)}
+  .row .oname{font-size:clamp(11px,.92vw,16px);color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row.shipped .obadge{color:var(--shipped);background:rgba(59,70,88,.15);border-color:rgba(59,70,88,.4)}
+  .row.shipped .oname{color:var(--shipped)}
+  .row .mdate{font-family:var(--mono);font-size:clamp(12px,1vw,18px);color:var(--fg);letter-spacing:.06em}
+  .row .tminus{font-family:var(--mono);font-size:clamp(13px,1.1vw,20px);text-align:right;font-variant-numeric:tabular-nums;color:var(--fg);letter-spacing:.04em}
+  .row .status{display:flex;align-items:center;justify-content:flex-end;gap:.6em;font-family:var(--mono);font-size:clamp(9px,.76vw,13px);letter-spacing:.18em;text-transform:uppercase}
+  .dot{width:clamp(7px,.55vw,10px);height:clamp(7px,.55vw,10px);border-radius:50%;flex:none}
+  .s-final{color:var(--rose)} .s-final .dot{background:var(--rose);box-shadow:0 0 10px var(--rose)}
+  .s-soon{color:var(--accent)} .s-soon .dot{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+  .s-track{color:var(--teal)} .s-track .dot{background:var(--teal);box-shadow:0 0 9px var(--teal)}
+  .s-plan{color:var(--muted)} .s-plan .dot{background:var(--muted)}
+  .s-shipped{color:var(--shipped)} .s-shipped .dot{background:var(--shipped)}
+  .s-tbd{color:var(--muted-2)} .s-tbd .dot{background:var(--muted-2)}
+  .row.is-featured{background:linear-gradient(90deg,rgba(var(--accent-rgb),.09),transparent)}
+  .row.is-featured::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .row.shipped .pcode,.row.shipped .pname,.row.shipped .mdate,.row.shipped .tminus{color:var(--shipped)}
+
+  #error{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:var(--ink);z-index:100;padding:6vw}
+  #error .card{max-width:820px;border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:clamp(28px,3vw,52px)}
+  #error h1{font-family:var(--mono);font-size:clamp(14px,1.2vw,20px);letter-spacing:.28em;text-transform:uppercase;color:var(--rose);margin-bottom:1em;display:flex;align-items:center;gap:.6em}
+  #error h1 .dot{width:11px;height:11px;border-radius:50%;background:var(--rose);box-shadow:0 0 12px var(--rose)}
+  #error p{color:var(--fg);font-size:clamp(14px,1.1vw,19px);line-height:1.6;margin-bottom:1em}
+  #error .muted{color:var(--muted);font-size:clamp(12px,1vw,16px)}
+  #error code{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:.9em 1.1em;display:block;color:var(--accent);font-size:clamp(12px,1vw,16px);margin:1em 0;white-space:pre-wrap;word-break:break-word}
+
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rot-bar{display:none}}
+</style>
+</head>
+<body>
+<div class="board" id="board" style="display:none">
+  <header>
+    <div class="wordmark">
+      <span class="beacon-dot"></span>
+      <span class="brand" id="brand">—</span>
+      <span class="tag" id="tag">Launch Control</span>
+    </div>
+    <div class="clock">
+      <span class="date" id="date">—</span>
+      <span class="time" id="time">—</span>
+      <span class="qtr" id="qtr">—</span>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="rot-bar"><div class="rot-fill" id="rot-fill"></div></div>
+      <div class="hero-content" id="hero-content">
+        <div class="eyebrow"><span>◈</span> <span id="hero-eyebrow">Next Launch</span> <span class="code" id="hero-code">—</span></div>
+        <div class="name" id="hero-name">—</div>
+        <div class="desc" id="hero-desc"></div>
+        <div class="owner" id="hero-owner"><span class="ava" id="hero-ava"></span><span class="owner-meta"><span class="owner-label">Product Owner</span><span class="owner-name" id="hero-owner-name"></span></span></div>
+        <div class="countdown">
+          <div class="days-wrap"><span class="days" id="hero-days">--</span><span class="days-label" id="hero-days-label">Days</span></div>
+          <div class="hms" id="hero-hms"></div>
+          <div class="launch-date"><span class="arrow">▸</span> <span id="hero-date">—</span></div>
+          <div class="readiness" id="hero-readiness">
+            <div class="rlabel"><span>Readiness</span><span id="hero-pct">—</span></div>
+            <div class="track"><div class="fill" id="hero-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="rdots" id="rdots"></div>
+    </section>
+    <section class="manifest">
+      <div class="mhead"><span>Product</span><span>Owner</span><span>Launch</span><span class="r">Countdown</span><span class="r">Status</span></div>
+      <div class="rows" id="rows"></div>
+    </section>
+  </main>
+</div>
+
+<div id="error"><div class="card">
+  <h1><span class="dot"></span> <span id="err-title">Can't load launches</span></h1>
+  <div id="err-body"></div>
+</div></div>
+
+<script>
+/* ────────────────────────────────────────────────────────────
+   This file contains no launch data. Everything comes from
+   launches.json in the same folder. Edit that file to update
+   the board — dates, products, brand, accent colour, timing.
+   ──────────────────────────────────────────────────────────── */
+
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const pad=n=>String(n).padStart(2,'0');
+const reduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+const CFG={ brand:'INTIVION', sub:'', tagline:'Launch Control', accent:null, dwellSeconds:9, rotateIncludeShipped:false, refreshMinutes:10 };
+let DATA=[], featuredCode=null, rotationSig='';
+
+const parseDate=s=>{ if(!s) return null; const [y,m,d]=String(s).split('-').map(Number); const dt=new Date(y,(m||1)-1,d||1,0,0,0); return isNaN(dt)?null:dt; };
+const fmtLong=dt=>`${pad(dt.getDate())} ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+const fmtShort=dt=>`${pad(dt.getDate())} ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+
+function hexToRgb(hex){ hex=String(hex).replace('#',''); if(hex.length===3) hex=hex.split('').map(c=>c+c).join(''); const n=parseInt(hex,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function lighten([r,g,b],amt){ const f=x=>Math.round(x+(255-x)*amt); return '#'+[f(r),f(g),f(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+function initials(name){ const parts=String(name).trim().split(/\s+/).filter(Boolean); if(!parts.length) return '—'; const a=parts[0][0]||''; const b=parts.length>1?parts[parts.length-1][0]:(parts[0][1]||''); return (a+b).toUpperCase(); }
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function normalize(products){
+  return products.map(p=>{
+    const code=p.code || p.name || '—';
+    const name=p.name || p.code || '';
+    const dt=parseDate(p.date);
+    const readiness=(typeof p.readiness==='number')?Math.max(0,Math.min(100,p.readiness)):null;
+    const owner=(p.owner!=null && String(p.owner).trim())?String(p.owner).trim():null;
+    return { code, name, dt, valid:!!dt, readiness, owner };
+  });
+}
+
+async function loadData(first){
+  let res;
+  try{ res=await fetch('./launches.json',{cache:'no-store'}); }
+  catch(e){ throw {kind:'fetch'}; }
+  if(!res.ok) throw {kind:'http',status:res.status};
+  let json;
+  try{ json=await res.json(); }
+  catch(e){ throw {kind:'parse',msg:e.message}; }
+
+  const products=json.products || json.launches || [];
+  if(!Array.isArray(products) || !products.length) throw {kind:'empty'};
+  DATA=normalize(products);
+
+  if(first){
+    if(json.brand!=null) CFG.brand=json.brand;
+    if(json.sub!=null) CFG.sub=json.sub;
+    if(json.tagline!=null) CFG.tagline=json.tagline;
+    if(json.accent!=null) CFG.accent=json.accent;
+    if(json.dwellSeconds!=null) CFG.dwellSeconds=json.dwellSeconds;
+    if(json.rotateIncludeShipped!=null) CFG.rotateIncludeShipped=json.rotateIncludeShipped;
+    if(json.refreshMinutes!=null) CFG.refreshMinutes=json.refreshMinutes;
+    applySettings();
+  }
+}
+
+function applySettings(){
+  document.getElementById('brand').innerHTML = CFG.sub ? `${CFG.brand} <span>/ ${CFG.sub}</span>` : CFG.brand;
+  document.getElementById('tag').textContent = CFG.tagline;
+  document.title = `${CFG.brand} · ${CFG.tagline}`;
+  if(CFG.accent){
+    const rgb=hexToRgb(CFG.accent), r=document.documentElement.style;
+    r.setProperty('--accent',CFG.accent);
+    r.setProperty('--accent-rgb',rgb.join(', '));
+    r.setProperty('--accent-lite',lighten(rgb,0.28));
+  }
+  document.documentElement.style.setProperty('--dwell', CFG.dwellSeconds+'s');
+}
+
+function classify(days,shipped){
+  if(shipped) return {cls:'s-shipped',label:'Shipped'};
+  if(days<7)  return {cls:'s-final',label:'Final'};
+  if(days<30) return {cls:'s-soon', label:'Imminent'};
+  if(days<75) return {cls:'s-track',label:'On Track'};
+  return {cls:'s-plan',label:'Planned'};
+}
+
+function enrich(now){
+  return DATA.map(p=>{
+    if(!p.valid) return {...p, days:null, shipped:false};
+    const diff=p.dt-now;
+    return {...p, days:Math.ceil(diff/86400000), shipped:diff<0};
+  }).sort((a,b)=>{
+    if(!a.valid&&!b.valid) return 0;
+    if(!a.valid) return 1;
+    if(!b.valid) return -1;
+    return a.dt-b.dt;
+  });
+}
+
+function buildRotation(items){
+  const pool=items.filter(i=>i.valid && (CFG.rotateIncludeShipped ? true : !i.shipped));
+  return (pool.length?pool:items.filter(i=>i.valid)).map(i=>i.code);
+}
+
+function renderDots(rotation){
+  const sig=rotation.join('|'), box=document.getElementById('rdots');
+  if(sig!==rotationSig){ rotationSig=sig; box.innerHTML=rotation.map(c=>`<span class="rdot" data-c="${c}"></span>`).join(''); }
+  box.querySelectorAll('.rdot').forEach(d=>d.classList.toggle('active', d.dataset.c===featuredCode));
+  box.style.display = rotation.length>1 ? 'flex' : 'none';
+}
+
+function renderHero(hero,isNext,now){
+  document.getElementById('hero-eyebrow').textContent = hero.shipped ? 'Now Live' : (isNext ? 'Next Launch' : 'Upcoming');
+  document.getElementById('hero-code').textContent = hero.code;
+  document.getElementById('hero-name').textContent = hero.name;
+  document.getElementById('hero-desc').textContent = (hero.code!==hero.name) ? hero.code : '';
+
+  const daysEl=document.getElementById('hero-days'), labelEl=document.getElementById('hero-days-label'), hmsEl=document.getElementById('hero-hms');
+  if(hero.shipped){
+    daysEl.textContent='✓'; labelEl.textContent='Live'; hmsEl.textContent='Shipped';
+  }else{
+    const ms=hero.dt-now, d=Math.floor(ms/86400000), h=Math.floor(ms%86400000/3600000), m=Math.floor(ms%3600000/60000), s=Math.floor(ms%60000/1000);
+    daysEl.textContent=Math.max(0,d); labelEl.textContent=(d===1)?'Day':'Days';
+    hmsEl.innerHTML=`${pad(Math.max(0,h))}<span class="u">h</span> ${pad(Math.max(0,m))}<span class="u">m</span> ${pad(Math.max(0,s))}<span class="u">s</span>`;
+  }
+  document.getElementById('hero-date').textContent=fmtLong(hero.dt);
+
+  const ow=document.getElementById('hero-owner');
+  if(hero.owner){ ow.style.display='flex'; document.getElementById('hero-ava').textContent=initials(hero.owner); document.getElementById('hero-owner-name').textContent=hero.owner; }
+  else{ ow.style.display='none'; }
+
+  const rd=document.getElementById('hero-readiness');
+  if(hero.readiness==null){ rd.style.display='none'; }
+  else{ rd.style.display=''; document.getElementById('hero-pct').textContent=hero.readiness+'%'; document.getElementById('hero-fill').style.width=hero.readiness+'%'; }
+}
+
+function renderManifest(items){
+  document.getElementById('rows').innerHTML = items.map(it=>{
+    let dateCell, tminus, st;
+    if(!it.valid){ dateCell='—'; tminus='TBD'; st={cls:'s-tbd',label:'TBD'}; }
+    else{ dateCell=fmtShort(it.dt); tminus=it.shipped?'✓ Live':(it.days<=0?'TODAY':`T-${it.days}`); st=classify(it.days,it.shipped); }
+    const cls=['row', it.code===featuredCode?'is-featured':'', it.shipped?'shipped':''].join(' ').trim();
+    const ownerCell = it.owner
+      ? `<div class="mowner"><span class="obadge">${initials(it.owner)}</span><span class="oname">${esc(it.owner)}</span></div>`
+      : `<div class="mowner empty">—</div>`;
+    return `<div class="${cls}">
+      <div class="prod"><span class="pcode">${esc(it.code)}</span><span class="pname">${esc(it.name)}</span></div>
+      ${ownerCell}
+      <div class="mdate">${dateCell}</div>
+      <div class="tminus">${tminus}</div>
+      <div class="status ${st.cls}"><span>${st.label}</span><span class="dot"></span></div>
+    </div>`;
+  }).join('');
+}
+
+function tick(){
+  const now=new Date();
+  document.getElementById('date').textContent=`${DAYS[now.getDay()]} ${pad(now.getDate())} ${MONTHS[now.getMonth()]}`;
+  document.getElementById('time').textContent=`${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  document.getElementById('qtr').textContent=`Q${Math.floor(now.getMonth()/3)+1} ${now.getFullYear()}`;
+
+  const items=enrich(now), rotation=buildRotation(items);
+  if(!featuredCode || !rotation.includes(featuredCode)) featuredCode=rotation[0];
+
+  const hero=items.find(i=>i.code===featuredCode);
+  const firstUpcoming=items.find(i=>i.valid && !i.shipped);
+  renderHero(hero, firstUpcoming && firstUpcoming.code===hero.code, now);
+  renderManifest(items);
+  renderDots(rotation);
+}
+
+function resetProgress(){ if(reduced) return; const f=document.getElementById('rot-fill'); f.classList.remove('run'); void f.offsetWidth; f.classList.add('run'); }
+
+function advance(){
+  const rotation=buildRotation(enrich(new Date()));
+  if(rotation.length<=1){ resetProgress(); return; }
+  const next=rotation[(rotation.indexOf(featuredCode)+1)%rotation.length];
+  const content=document.getElementById('hero-content');
+  if(reduced){ featuredCode=next; tick(); return; }
+  content.classList.add('swapping');
+  setTimeout(()=>{ featuredCode=next; tick(); content.classList.remove('swapping'); resetProgress(); },400);
+}
+
+function showError(e){
+  document.getElementById('board').style.display='none';
+  const box=document.getElementById('error'); box.style.display='flex';
+  const title=document.getElementById('err-title'), body=document.getElementById('err-body');
+  const isFile=location.protocol==='file:';
+  if(e.kind==='fetch' && isFile){
+    title.textContent='Open it over http, not from a file';
+    body.innerHTML=`<p>Browsers block reading <code style="display:inline;padding:.15em .4em">launches.json</code> when the page is opened by double-clicking. Serve the folder instead — from a terminal in this folder run:</p>
+      <code>python3 -m http.server 8000</code>
+      <p class="muted">then open <b>http://localhost:8000/launch-control.html</b> on the TV. Any static host works too.</p>`;
+  }else if(e.kind==='fetch' || e.kind==='http'){
+    title.textContent='launches.json not found';
+    body.innerHTML=`<p>Couldn't load <code style="display:inline;padding:.15em .4em">launches.json</code>${e.status?` (HTTP ${e.status})`:''}. Make sure it sits in the same folder as this page.</p>`;
+  }else if(e.kind==='parse'){
+    title.textContent='launches.json has a formatting error';
+    body.innerHTML=`<p>The file loaded but isn't valid JSON. Check for a trailing comma or a missing quote.</p><code>${e.msg||''}</code>`;
+  }else if(e.kind==='empty'){
+    title.textContent='No products in launches.json';
+    body.innerHTML=`<p>Add at least one entry to the <code style="display:inline;padding:.15em .4em">products</code> array, each with a <code style="display:inline;padding:.15em .4em">date</code>.</p>`;
+  }else{
+    body.innerHTML=`<p>Something went wrong loading the board.</p>`;
+  }
+}
+
+async function boot(){
+  try{ await loadData(true); }
+  catch(e){ return showError(e); }
+  document.getElementById('board').style.display='grid';
+  tick(); resetProgress();
+  setInterval(tick,1000);
+  setInterval(advance, CFG.dwellSeconds*1000);
+  if(CFG.refreshMinutes>0) setInterval(()=>loadData(false).catch(()=>{}), CFG.refreshMinutes*60000);
+}
+boot();
+</script>
+</body>
+</html>

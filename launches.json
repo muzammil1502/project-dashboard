@@ -1,0 +1,22 @@
+{
+  "_note": "Edit this file to update the board. Only 'date' is required per product (YYYY-MM-DD). 'code', 'name', 'owner' and 'readiness' are optional. Owner names below are placeholders — replace them. Settings below are all optional too.",
+
+  "brand": "INTIVION",
+  "sub": "Altima",
+  "tagline": "Launch Control",
+  "accent": "#F5B841",
+  "dwellSeconds": 9,
+  "rotateIncludeShipped": false,
+  "refreshMinutes": 10,
+
+  "products": [
+    { "code": "AltimaCRM Pro", "name": "Brokerage CRM",             "owner": "Aman",          "date": "2026-07-21", "readiness": 82 },
+    { "code": "WT5",           "name": "WebTrader 5",               "owner": "Rahul Mehta",   "date": "2026-08-12", "readiness": 64 },
+    { "code": "Prop",          "name": "Prop Trading Platform",     "owner": "Sara Nguyen",   "date": "2026-08-28", "readiness": 55 },
+    { "code": "RMS5",          "name": "Risk Management Suite 5",   "owner": "David Cohen",   "date": "2026-09-09", "readiness": 40 },
+    { "code": "PAMM",          "name": "PAMM / MAM Manager",        "owner": "Priya Sharma",  "date": "2026-09-23", "readiness": 33 },
+    { "code": "IB",            "name": "Introducing Broker Portal", "owner": "Tom Alvarez",   "date": "2026-10-14", "readiness": 18 },
+    { "code": "WT4",           "name": "WebTrader 4",               "owner": "Rahul Mehta",   "date": "2026-05-15", "readiness": 100 },
+    { "code": "RMS4",          "name": "Risk Management Suite 4",   "owner": "David Cohen",   "date": "2026-06-02", "readiness": 100 }
+  ]
+}
