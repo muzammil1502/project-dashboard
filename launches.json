@@ -20,9 +20,9 @@
         { "label": "Documentation", "state": "pending" }
       ] },
 
-    { "code": "WT5", "name": "WebTrader 5", "owner": "Rahul Mehta", "date": "2026-08-12",
+    { "code": "PAMM UI/BE", "name": "PAMM Integration", "owner": "Rehan Khan", "date": "2026-08-10",
       "phase": "QA", "confidence": 70, "readiness": 64, "qa": 62, "openTasks": 34, "blockers": 2,
-      "cycle": "Sprint 18", "build": "v5.0.0-beta7", "updated": "5h ago",
+       "build": "v5.0.0-alpha1", "updated": "5h ago",
       "milestones": [
         { "label": "Charting engine", "state": "done" },
         { "label": "Order tickets", "state": "done" },
