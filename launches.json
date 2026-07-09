@@ -20,7 +20,7 @@
         { "label": "Documentation", "state": "pending" }
       ] },
       { "code": "AltimaCRM Pro Testing", "name": "Brokerage CRM", "owner": "Rushikesh", "date": "2026-07-15",
-        "phase": "QA Phase", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 64, "blockers": 0,"Waiting for deployement": 60,
+        "phase": "QA Phase", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 64, "blockers": 0,"Deployement-pending": 60,
          "build": "v3.4.0-rc4", "updated": "40m ago",
         "milestones": [
           { "label": "Core migration", "state": "done" },
