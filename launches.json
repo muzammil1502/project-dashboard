@@ -49,7 +49,7 @@
       ] },
 
     { "code": "RMS5", "name": "New RMS dashboard", "owner": "rehan Khan", "date": "2026-09-18",
-      "phase": "Development", "confidence":  00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 00,
+      "phase": "Development", "confidence":  0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
        "build": "v5.0.0-alpha1", "updated": "1d ago",
       "milestones": [
         { "label": "Rules engine", "state": "pending" },
@@ -59,7 +59,7 @@
       ] },
 
     { "code": "IB", "name": "IB integration + AltimaPro", "owner": "Rehan Khan", "date": "2026-08-28",
-      "phase": "Development", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 0,
+      "phase": "Development", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
       "cycle": "Sprint 03", "build": "v0.3.0-dev", "updated": "6h ago",
       "milestones": [
         { "label": "Commission tree", "state": "pending" },
