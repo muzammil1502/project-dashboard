@@ -1,5 +1,5 @@
 {
-  "_note": "Edit this file to update the board. Per product: 'date' (YYYY-MM-DD) drives the countdown; 'phase' is one of Discovery | Architecture | Development | QA | UAT | Documentation | Deployment | Live; milestone 'state' is done | pending | blocked; confidence/readiness/qa are 0-100. Only 'date' is strictly required. The settings block at the top is optional. This file must be served over http (open the page via a local server, not by double-clicking — the page shows how if you forget).",
+  "_note": "Edit this file to update the board. Per product: 'date' (YYYY-MM-DD) drives the countdown; 'phase' is one of Discovery | Architecture | Development | QA | UAT | Documentation | Deployment | Live; milestone 'state' is done | pending | blocked; confidence/readiness/qa are 0-10. Only 'date' is strictly required. The settings block at the top is optional. This file must be served over http (open the page via a local server, not by double-clicking — the page shows how if you forget).",
 
   "brand": "INTIVION",
   "sub": "Altima",
@@ -70,7 +70,7 @@
       ] },
 
     { "code": "MT4", "name": "MT4 PRO WEBTRADER + CZ INTEGRATION", "owner": "Saurika Deshpande", "date": "2026-07-17",
-      "phase": "Live", "confidence": 100, "readiness": 100, "qa": 98, "openTasks": 0, "blockers": 0,
+      "phase": "Live", "confidence": 10, "readiness": 10, "qa": 98, "openTasks": 0, "blockers": 0,
       "cycle": "Development", "build": "v4.6.2", "updated": "2d ago",
       "milestones": [
         { "label": "Release", "state": "done" },
@@ -80,7 +80,7 @@
       ] },
 
     { "code": "RMS4", "name": "MT5 PRO WEBTRADER + CZ INTEGRATION", "owner": "David Cohen", "date": "2026-07-24",
-      "phase": "Live", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 0, "blockers": 0,
+      "phase": "Live", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
       "cycle": "Development", "build": "v4.3.1", "updated": "1w ago",
       "milestones": [
         { "label": "Release", "state": "done" },
