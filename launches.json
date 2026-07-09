@@ -10,9 +10,9 @@
   "refreshMinutes": 10,
 
   "products": [
-    { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Aman Sheriff", "date": "2026-07-10",
-      "phase": "Documentation", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 6, "blockers": 0,
-       "build": "v3.4.0-rc4", "updated": "40m ago",
+    { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Sunil Jadhav", "date": "2026-07-23",
+      "phase": "Documentation", "confidence": 88, "readiness": 90, "qa": 64, "openTasks": 64, "blockers": 0,
+      "Deployement-pending": 60, "build": "v3.4.0-rc4", "updated": "1d ago",
       "milestones": [
         { "label": "Core migration", "state": "done" },
         { "label": "API freeze", "state": "done" },
@@ -38,38 +38,28 @@
         { "label": "Load testing", "state": "pending" }
       ] },
 
-    { "code": "Prop", "name": "Prop Trading Platform", "owner": "Sara Nguyen", "date": "2026-08-28",
+    { "code": "Prop", "name": "PROP INTEGRATION + ALTIMAPRO (UNION)", "owner": "Rehan Khan", "date": "2026-08-07",
       "phase": "Development", "confidence": 58, "readiness": 55, "qa": 44, "openTasks": 47, "blockers": 3,
-      "cycle": "Sprint 12", "build": "v1.9.0-alpha3", "updated": "2h ago",
+      "build": "v1.9.0-alpha3", "updated": "2h ago",
       "milestones": [
-        { "label": "Ledger engine", "state": "done" },
+        { "label": "Ledger engine", "state": "pending" },
         { "label": "Risk rules", "state": "pending" },
-        { "label": "Payout gateway", "state": "blocked" },
+        { "label": "Payout gateway", "state": "pending" },
         { "label": "Compliance review", "state": "pending" }
       ] },
 
-    { "code": "RMS5", "name": "Risk Management Suite 5", "owner": "David Cohen", "date": "2026-09-09",
-      "phase": "Development", "confidence": 52, "readiness": 40, "qa": 30, "openTasks": 58, "blockers": 2,
-      "cycle": "Sprint 09", "build": "v5.0.0-alpha1", "updated": "1d ago",
+    { "code": "RMS5", "name": "New RMS dashboard", "owner": "rehan Khan", "date": "2026-09-18",
+      "phase": "Development", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 00,
+       "build": "v5.0.0-alpha1", "updated": "1d ago",
       "milestones": [
-        { "label": "Rules engine", "state": "done" },
+        { "label": "Rules engine", "state": "pending" },
         { "label": "Exposure calc", "state": "pending" },
         { "label": "Alert pipeline", "state": "pending" },
         { "label": "Broker config", "state": "pending" }
       ] },
 
-    { "code": "PAMM", "name": "PAMM / MAM Manager", "owner": "Priya Sharma", "date": "2026-09-23",
-      "phase": "Architecture", "confidence": 45, "readiness": 33, "qa": 20, "openTasks": 40, "blockers": 1,
-      "cycle": "Sprint 06", "build": "v0.8.0-dev", "updated": "3h ago",
-      "milestones": [
-        { "label": "Allocation model", "state": "done" },
-        { "label": "Fee engine", "state": "pending" },
-        { "label": "Investor portal", "state": "pending" },
-        { "label": "KYC flow", "state": "pending" }
-      ] },
-
-    { "code": "IB", "name": "Introducing Broker Portal", "owner": "Tom Alvarez", "date": "2026-10-14",
-      "phase": "Discovery", "confidence": 40, "readiness": 18, "qa": 10, "openTasks": 22, "blockers": 0,
+    { "code": "IB", "name": "IB integration + AltimaPro", "owner": "Rehan Khan", "date": "2026-08-28",
+      "phase": "Development", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 0,
       "cycle": "Sprint 03", "build": "v0.3.0-dev", "updated": "6h ago",
       "milestones": [
         { "label": "Commission tree", "state": "pending" },
@@ -78,9 +68,9 @@
         { "label": "Portal UI", "state": "pending" }
       ] },
 
-    { "code": "WT4", "name": "WebTrader 4", "owner": "Rahul Mehta", "date": "2026-07-01",
+    { "code": "MT4", "name": "MT4 PRO WEBTRADER + CZ INTEGRATION", "owner": "Saurika Deshpande", "date": "2026-07-17",
       "phase": "Live", "confidence": 100, "readiness": 100, "qa": 98, "openTasks": 0, "blockers": 0,
-      "cycle": "Maintenance", "build": "v4.6.2", "updated": "2d ago",
+      "cycle": "Development", "build": "v4.6.2", "updated": "2d ago",
       "milestones": [
         { "label": "Release", "state": "done" },
         { "label": "Rollout", "state": "done" },
@@ -88,9 +78,9 @@
         { "label": "Handover", "state": "done" }
       ] },
 
-    { "code": "RMS4", "name": "Risk Management Suite 4", "owner": "David Cohen", "date": "2026-06-02",
-      "phase": "Live", "confidence": 100, "readiness": 100, "qa": 97, "openTasks": 0, "blockers": 0,
-      "cycle": "Maintenance", "build": "v4.3.1", "updated": "1w ago",
+    { "code": "RMS4", "name": "MT5 PRO WEBTRADER + CZ INTEGRATION", "owner": "David Cohen", "date": "2026-07-24",
+      "phase": "Live", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 0, "blockers": 0,
+      "cycle": "Development", "build": "v4.3.1", "updated": "1w ago",
       "milestones": [
         { "label": "Release", "state": "done" },
         { "label": "Rollout", "state": "done" },
