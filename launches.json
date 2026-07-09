@@ -1,5 +1,5 @@
 {
-  "_note": "Edit this file to update the board. Per product: 'date' (YYYY-MM-DD) drives the countdown; 'phase' is one of Discovery | Architecture | Development | QA | UAT | Documentation | Deployment | Live; milestone 'state' is done | pending | blocked; confidence/readiness/qa are 0-10. Only 'date' is strictly required. The settings block at the top is optional. This file must be served over http (open the page via a local server, not by double-clicking — the page shows how if you forget).",
+  "_note": "Edit this file to update the board. Per product: 'date' (YYYY-MM-DD) drives the countdown; 'phase' is one of Discovery | Architecture | Development | QA | UAT | Documentation | Deployment | Live; milestone 'state' is done | pending | blocked; confidence/readiness/qa are 0-100. Only 'date' is strictly required.",
 
   "brand": "INTIVION",
   "sub": "Altima",
@@ -9,92 +9,200 @@
   "rotateIncludeShipped": false,
   "refreshMinutes": 10,
 
-
   "products": [
-    { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Sunil Jadhav", "date": "2026-07-23",
-      "phase": "Documentation", "confidence": 88, "readiness": 90, "qa": 64, "openTasks": 64, "blockers": 0,
-      "Deployement-pending": 60, "build": "v3.4.0-rc4", "updated": "1d ago",
+    {
+      "code": "AltimaCRM Pro",
+      "name": "Brokerage CRM",
+      "owner": "Sunil Jadhav",
+      "date": "2026-07-23",
+      "phase": "Documentation",
+      "confidence": 88,
+      "readiness": 90,
+      "qa": 64,
+      "openTasks": 64,
+      "blockers": 0,
+      "Deployement-pending": 60,
+      "build": "v3.4.0-rc4",
+      "updated": "1d ago",
       "milestones": [
         { "label": "Core migration", "state": "done" },
         { "label": "API freeze", "state": "done" },
         { "label": "UAT sign-off", "state": "done" },
         { "label": "Documentation", "state": "pending" }
-      ] },
-      { "code": "AltimaCRM Pro Testing", "name": "Brokerage CRM", "owner": "Rushikesh", "date": "2026-07-15",
-        "phase": "QA Phase", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 64, "blockers": 0,"Deployement-pending": 60,
-         "build": "v3.4.0-rc4", "updated": "40m ago",
-        "milestones": [
-          { "label": "Core migration", "state": "done" },
-          { "label": "API freeze", "state": "done" },
-          { "label": "UAT sign-off", "state": "done" },
-          { "label": "Documentation", "state": "pending" }
-        ] },
-    { "code": "PAMM UI/BE", "name": "PAMM Integration", "owner": "Rehan Khan", "date": "2026-07-10",
-      "phase": "QA", "confidence": 70, "readiness": 64, "qa": 62, "openTasks": 34, "blockers": 2,
-       "build": "v5.0.0-alpha1", "updated": "5h ago",
+      ]
+    },
+
+    {
+      "code": "AltimaCRM Pro Testing",
+      "name": "Brokerage CRM",
+      "owner": "Rushikesh",
+      "date": "2026-07-15",
+      "phase": "QA",
+      "confidence": 88,
+      "readiness": 90,
+      "qa": 92,
+      "openTasks": 64,
+      "blockers": 0,
+      "Deployement-pending": 60,
+      "build": "v3.4.0-rc4",
+      "updated": "40m ago",
+      "milestones": [
+        { "label": "Core migration", "state": "done" },
+        { "label": "API freeze", "state": "done" },
+        { "label": "UAT sign-off", "state": "done" },
+        { "label": "Documentation", "state": "pending" }
+      ]
+    },
+
+    {
+      "code": "PAMM UI/BE",
+      "name": "PAMM Integration",
+      "owner": "Rehan Khan",
+      "date": "2026-07-10",
+      "phase": "QA",
+      "confidence": 70,
+      "readiness": 64,
+      "qa": 62,
+      "openTasks": 34,
+      "blockers": 2,
+      "build": "v5.0.0-alpha1",
+      "updated": "5h ago",
       "milestones": [
         { "label": "Charting engine", "state": "done" },
         { "label": "Order tickets", "state": "done" },
         { "label": "Realtime feed", "state": "pending" },
         { "label": "Load testing", "state": "pending" }
-      ] },
+      ]
+    },
 
-    { "code": "Prop", "name": "PROP INTEGRATION + ALTIMAPRO (UNION)", "owner": "Rehan Khan", "date": "2026-08-07",
-      "phase": "Development", "confidence": 58, "readiness": 55, "qa": 44, "openTasks": 47, "blockers": 3,
-      "build": "v1.9.0-alpha3", "updated": "2h ago",
+    {
+      "code": "Prop",
+      "name": "PROP INTEGRATION + ALTIMAPRO (UNION)",
+      "owner": "Rehan Khan",
+      "date": "2026-08-07",
+      "phase": "Development",
+      "confidence": 58,
+      "readiness": 55,
+      "qa": 44,
+      "openTasks": 47,
+      "blockers": 3,
+      "build": "v1.9.0-alpha3",
+      "updated": "2h ago",
       "milestones": [
         { "label": "Ledger engine", "state": "pending" },
         { "label": "Risk rules", "state": "pending" },
         { "label": "Payout gateway", "state": "pending" },
         { "label": "Compliance review", "state": "pending" }
-      ] },
+      ]
+    },
 
-    { "code": "RMS5", "name": "New RMS dashboard", "owner": "rehan Khan", "date": "2026-09-18",
-      "phase": "Development", "confidence":  0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
-       "build": "v5.0.0-alpha1", "updated": "1d ago",
+    {
+      "code": "RMS5",
+      "name": "New RMS dashboard",
+      "owner": "Rehan Khan",
+      "date": "2026-09-18",
+      "phase": "Development",
+      "confidence": 0,
+      "readiness": 0,
+      "qa": 0,
+      "openTasks": 0,
+      "blockers": 0,
+      "build": "v5.0.0-alpha1",
+      "updated": "1d ago",
       "milestones": [
         { "label": "Rules engine", "state": "pending" },
         { "label": "Exposure calc", "state": "pending" },
         { "label": "Alert pipeline", "state": "pending" },
         { "label": "Broker config", "state": "pending" }
-      ] },
+      ]
+    },
 
-    { "code": "IB", "name": "IB integration + AltimaPro", "owner": "Rehan Khan", "date": "2026-08-28",
-      "phase": "Development", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
-      "cycle": "Sprint 03", "build": "v0.3.0-dev", "updated": "6h ago",
+    {
+      "code": "IB",
+      "name": "IB Integration + AltimaPro",
+      "owner": "Rehan Khan",
+      "date": "2026-08-28",
+      "phase": "Development",
+      "confidence": 0,
+      "readiness": 0,
+      "qa": 0,
+      "openTasks": 0,
+      "blockers": 0,
+      "cycle": "Sprint 03",
+      "build": "v0.3.0-dev",
+      "updated": "6h ago",
       "milestones": [
         { "label": "Commission tree", "state": "pending" },
         { "label": "Multi-tier logic", "state": "pending" },
         { "label": "Payout schedule", "state": "pending" },
         { "label": "Portal UI", "state": "pending" }
-      ] },
+      ]
+    },
 
-    { "code": "MT4", "name": "MT4 PRO WEBTRADER + CZ INTEGRATION", "owner": "Saurika Deshpande", "date": "2026-07-17",
-      "phase": "Live", "confidence": 10, "readiness": 10, "qa": 98, "openTasks": 0, "blockers": 0,
-      "cycle": "Development", "build": "v4.6.2", "updated": "2d ago",
+    {
+      "code": "MT4",
+      "name": "MT4 PRO WEBTRADER + CZ INTEGRATION",
+      "owner": "Saurika Deshpande",
+      "date": "2026-07-17",
+      "phase": "Live",
+      "confidence": 100,
+      "readiness": 100,
+      "qa": 98,
+      "openTasks": 0,
+      "blockers": 0,
+      "cycle": "Development",
+      "build": "v4.6.2",
+      "updated": "2d ago",
       "milestones": [
         { "label": "Release", "state": "done" },
         { "label": "Rollout", "state": "done" },
         { "label": "Monitoring", "state": "done" },
         { "label": "Handover", "state": "done" }
-      ] },
-      { "code": "MT4", "name": "RMS TTFXMT5 INTEGRATION + ALTIMAPRO", "owner": "Saurika Deshpande", "date": "2026-07-31",
-        "phase": "Live", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
-        "cycle": "Development", "build": "v4.6.2", "updated": "2d ago",
-        "milestones": [
-          { "label": "Release", "state": "done" },
-          { "label": "Rollout", "state": "done" },
-          { "label": "Monitoring", "state": "done" },
-          { "label": "Handover", "state": "done" }
-        ] },
-    { "code": "RMS4", "name": "MT5 PRO WEBTRADER + CZ INTEGRATION", "owner": "Saurika Deshpande", "date": "2026-07-31",
-      "phase": "Live", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
-      "cycle": "Development", "build": "v4.3.1", "updated": "1w ago",
+      ]
+    },
+
+    {
+      "code": "TTFXMT5",
+      "name": "RMS TTFXMT5 INTEGRATION + ALTIMAPRO",
+      "owner": "Saurika Deshpande",
+      "date": "2026-07-31",
+      "phase": "Live",
+      "confidence": 0,
+      "readiness": 0,
+      "qa": 0,
+      "openTasks": 0,
+      "blockers": 0,
+      "cycle": "Development",
+      "build": "v4.6.2",
+      "updated": "2d ago",
       "milestones": [
         { "label": "Release", "state": "done" },
         { "label": "Rollout", "state": "done" },
         { "label": "Monitoring", "state": "done" },
         { "label": "Handover", "state": "done" }
-      ] }
+      ]
+    },
+
+    {
+      "code": "RMS4",
+      "name": "MT5 PRO WEBTRADER + CZ INTEGRATION",
+      "owner": "Saurika Deshpande",
+      "date": "2026-07-31",
+      "phase": "Live",
+      "confidence": 0,
+      "readiness": 0,
+      "qa": 0,
+      "openTasks": 0,
+      "blockers": 0,
+      "cycle": "Development",
+      "build": "v4.3.1",
+      "updated": "1w ago",
+      "milestones": [
+        { "label": "Release", "state": "done" },
+        { "label": "Rollout", "state": "done" },
+        { "label": "Monitoring", "state": "done" },
+        { "label": "Handover", "state": "done" }
+      ]
+    }
   ]
 }
