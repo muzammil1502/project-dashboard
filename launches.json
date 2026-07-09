@@ -10,16 +10,24 @@
   "refreshMinutes": 10,
 
   "products": [
-    { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Aman Sheriff", "date": "2026-07-21",
+    { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Aman Sheriff", "date": "2026-07-10",
       "phase": "Documentation", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 6, "blockers": 0,
-      "cycle": "Sprint 24", "build": "v3.4.0-rc4", "updated": "40m ago",
+       "build": "v3.4.0-rc4", "updated": "40m ago",
       "milestones": [
         { "label": "Core migration", "state": "done" },
         { "label": "API freeze", "state": "done" },
         { "label": "UAT sign-off", "state": "done" },
         { "label": "Documentation", "state": "pending" }
       ] },
-
+      { "code": "AltimaCRM Pro Testing", "name": "Brokerage CRM", "owner": "Rushikesh", "date": "2026-07-15",
+        "phase": "QA Phase", "confidence": 88, "readiness": 90, "qa": 92, "openTasks": 64, "blockers": 0,"Waiting for deployement": 60,
+         "build": "v3.4.0-rc4", "updated": "40m ago",
+        "milestones": [
+          { "label": "Core migration", "state": "done" },
+          { "label": "API freeze", "state": "done" },
+          { "label": "UAT sign-off", "state": "done" },
+          { "label": "Documentation", "state": "pending" }
+        ] },
     { "code": "PAMM UI/BE", "name": "PAMM Integration", "owner": "Rehan Khan", "date": "2026-07-10",
       "phase": "QA", "confidence": 70, "readiness": 64, "qa": 62, "openTasks": 34, "blockers": 2,
        "build": "v5.0.0-alpha1", "updated": "5h ago",
