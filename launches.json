@@ -49,7 +49,7 @@
       ] },
 
     { "code": "RMS5", "name": "New RMS dashboard", "owner": "rehan Khan", "date": "2026-09-18",
-      "phase": "Development", "confidence": 00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 00,
+      "phase": "Development", "confidence":  00, "readiness": 00, "qa": 00, "openTasks": 00, "blockers": 00,
        "build": "v5.0.0-alpha1", "updated": "1d ago",
       "milestones": [
         { "label": "Rules engine", "state": "pending" },
