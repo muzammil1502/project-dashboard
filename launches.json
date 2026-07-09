@@ -9,7 +9,7 @@
   "rotateIncludeShipped": false,
   "refreshMinutes": 10,
 
-  
+
   "products": [
     { "code": "AltimaCRM Pro", "name": "Brokerage CRM", "owner": "Sunil Jadhav", "date": "2026-07-23",
       "phase": "Documentation", "confidence": 88, "readiness": 90, "qa": 64, "openTasks": 64, "blockers": 0,
@@ -78,8 +78,16 @@
         { "label": "Monitoring", "state": "done" },
         { "label": "Handover", "state": "done" }
       ] },
-
-    { "code": "RMS4", "name": "MT5 PRO WEBTRADER + CZ INTEGRATION", "owner": "David Cohen", "date": "2026-07-24",
+      { "code": "MT4", "name": "RMS TTFXMT5 INTEGRATION + ALTIMAPRO", "owner": "Saurika Deshpande", "date": "2026-07-31",
+        "phase": "Live", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
+        "cycle": "Development", "build": "v4.6.2", "updated": "2d ago",
+        "milestones": [
+          { "label": "Release", "state": "done" },
+          { "label": "Rollout", "state": "done" },
+          { "label": "Monitoring", "state": "done" },
+          { "label": "Handover", "state": "done" }
+        ] },
+    { "code": "RMS4", "name": "MT5 PRO WEBTRADER + CZ INTEGRATION", "owner": "Saurika Deshpande", "date": "2026-07-31",
       "phase": "Live", "confidence": 0, "readiness": 0, "qa": 0, "openTasks": 0, "blockers": 0,
       "cycle": "Development", "build": "v4.3.1", "updated": "1w ago",
       "milestones": [
