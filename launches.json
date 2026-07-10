@@ -53,7 +53,26 @@
         { "label": "Documentation", "state": "pending" }
       ]
     },
-
+   {
+      "code": "CRM",
+      "name": "PRO CRM for ECGX Capital",
+      "owner": "Aryan Sheriff",
+      "date": "2026-08-15",
+      "phase": "Pending Development",
+      "confidence": 0,
+      "readiness": 0,
+      "qa": 0,
+      "openTasks": 0,
+      "blockers": 0,
+      "build": "v5.0.0-alpha1",
+      "updated": "1d ago",
+      "milestones": [
+        { "label": "Rules engine", "state": "pending" },
+        { "label": "Exposure calc", "state": "pending" },
+        { "label": "Alert pipeline", "state": "pending" },
+        { "label": "Broker config", "state": "pending" }
+      ]
+    },
     {
       "code": "PAMM UI/BE",
       "name": "PAMM Integration",
